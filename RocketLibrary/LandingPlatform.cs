@@ -20,24 +20,31 @@ namespace RocketLibrary
             StartingPosition = new Position();
         }
 
-        public static LandingPlatform CreatePlatform(int width, int height, int startingX, int startingY)
+        public static LandingPlatform CreatePlatform(int widthPlatform, int heightPlatform, Position startingPosition, LandingArea area)
         {
-            var landingPlatform = new LandingPlatform(width, height);
-            landingPlatform.StartingPosition.X = startingX;
-            landingPlatform.StartingPosition.Y = startingY;
-            
-            landingPlatform.Platform = new LandingResult[100][];
-            for (int i = 0; i < 100; i++)
+            var landingPlatform = new LandingPlatform(widthPlatform, heightPlatform);
+            landingPlatform.StartingPosition = startingPosition;
+
+            if (!IsValidPlatform(landingPlatform, area))
             {
-                landingPlatform.Platform[i] = new LandingResult[100];
-                for (int j = 0; j < 100; j++)
+                throw new ArgumentException();
+            }
+
+            var widthArea = area.GetAreaWidth();
+            var heightArea = area.GetAreaHeight();
+
+            landingPlatform.Platform = new LandingResult[widthArea][];
+            for (int i = 0; i < widthArea; i++)
+            {
+                landingPlatform.Platform[i] = new LandingResult[heightArea];
+                for (int j = 0; j < heightArea; j++)
                     landingPlatform.Platform[i][j] = LandingResult.OUT_OF_PLATFORM;
             }
 
 
-                for (int i = startingX; i < startingX + width; i++)
+             for (int i = startingPosition.X; i < startingPosition.X + widthPlatform; i++)
             {
-                for (int j = startingY; j < startingY + height; j++)
+                for (int j = startingPosition.Y; j < startingPosition.Y + heightPlatform; j++)
                 {
                     landingPlatform.Platform[i][j] = LandingResult.OK;
                 }
@@ -46,10 +53,13 @@ namespace RocketLibrary
             return landingPlatform;
         }
 
-        //private void SetLandingResultAtPosition(int x, int y, LandingResult landingResult)
-        //{
-        //    Platform[x][y] = landingResult;
-        //}
+        private static bool IsValidPlatform(LandingPlatform landingPlatform, LandingArea area)
+        {
+            return landingPlatform.StartingPosition.X >= 0 &&
+                landingPlatform.StartingPosition.X + landingPlatform.Width <= area.GetAreaWidth() &&
+                landingPlatform.StartingPosition.Y >= 0 &&
+                landingPlatform.StartingPosition.Y + landingPlatform.Height <= area.GetAreaHeight();
+        }
 
         public void SetPreviousRocketAtPosition(int x, int y)
         {

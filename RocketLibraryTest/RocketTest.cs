@@ -15,11 +15,11 @@ namespace RocketLibraryTest
             // Arrange
 
             var area = LandingArea.CreateArea(100, 100);
-            var platform = LandingPlatform.CreatePlatform(10, 10, 5, 5);
+            var startingPosition = new Position(5, 5, area);
+            var platform = LandingPlatform.CreatePlatform(10, 10, startingPosition, area);
 
             var rocket = new Rocket();
             var position = new Position(x, y, area);
-
 
             // Act
 
@@ -40,13 +40,13 @@ namespace RocketLibraryTest
             // Arrange
 
             var area = LandingArea.CreateArea(100, 100);
-            var platform = LandingPlatform.CreatePlatform(10, 10, 5, 5);
+            var startingPosition = new Position(5, 5, area);
+            var platform = LandingPlatform.CreatePlatform(10, 10, startingPosition, area);
 
             var rocket = new Rocket();
             var position = new Position(x, y, area);
 
             platform.SetPreviousRocketAtPosition(7, 7);
-
 
             // Act
 
