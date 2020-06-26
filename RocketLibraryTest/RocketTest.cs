@@ -15,7 +15,7 @@ namespace RocketLibraryTest
 
             var area = LandingArea.CreateArea(100, 100);
             var startingPosition = new Position(5, 5);
-            var platform = LandingPlatform.CreatePlatform(10, 10, startingPosition, area);
+            var platform = LandingPlatform.CreatePlatform(startingPosition, area, 10, 10);
 
             var rocket = new Rocket();
             var position = new Position(x, y);
@@ -41,7 +41,9 @@ namespace RocketLibraryTest
 
             var area = LandingArea.CreateArea(100, 100);
             var startingPosition = new Position(5, 5);
-            var platform = LandingPlatform.CreatePlatform(10, 10, startingPosition, area);
+
+            // Gettings dimensions from appsettings.json in \RocketLibraryTest\bin\Debug\netcoreapp3.1\appsettings.json
+            var platform = LandingPlatform.CreatePlatform(startingPosition, area);
 
             var rocket = new Rocket();
             var position = new Position(x, y);

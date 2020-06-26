@@ -1,7 +1,15 @@
-﻿namespace RocketLibrary
+﻿using Microsoft.Extensions.Configuration;
+using System.IO;
+
+namespace RocketLibrary
 {
     public  class LandingPlatform
     {
+       private static IConfiguration configuration = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory()) // Directory where the json files are located
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .Build();
+
         public int Width { get; set; }
         public int Height { get; set; }
 
@@ -17,10 +25,13 @@
             LandingResults = landingResults;
         }
 
-        public static LandingPlatform CreatePlatform(int widthPlatform, int heightPlatform, Position startingPosition, LandingArea landingArea)
+        public static LandingPlatform CreatePlatform(Position startingPosition, LandingArea landingArea, int? widthPlatform = 0, int? heightPlatform = 0)
         {
+            var width = int.TryParse(configuration["WidthPlatform"], out int widthP) ? widthP : widthPlatform.Value;
+            var height = int.TryParse(configuration["HeightPlatform"], out int heightP) ? heightP : heightPlatform.Value;
+
             return LandingPlatformBuilder.CreateLandingPlatform()
-                .WithWidthAndHeight(widthPlatform, heightPlatform)
+                .WithWidthAndHeight(width, height)
                 .WithStartingPosition(startingPosition)
                 .IntoArea(landingArea)
                 .WithDefaultLandingResult()
