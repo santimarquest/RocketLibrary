@@ -12,7 +12,7 @@ namespace RocketLibrary
             {
                 return LandingResult.OUT_OF_PLATFORM;
             }           
-            return platform.Platform[position.X][position.Y];         
+            return platform.LandingResults[position.X][position.Y];         
         }
     }
 }

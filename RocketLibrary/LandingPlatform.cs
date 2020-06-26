@@ -11,70 +11,52 @@ namespace RocketLibrary
 
         public Position StartingPosition { get; set; }
 
-        public LandingResult[][] Platform;
+        public LandingResult[][] LandingResults;
 
-        private LandingPlatform(int width, int height)
+        public LandingPlatform(int width, int height)
         {
             Width = width;
             Height = height;
-            StartingPosition = new Position();
         }
 
-        public static LandingPlatform CreatePlatform(int widthPlatform, int heightPlatform, Position startingPosition, LandingArea area)
+        public LandingPlatform(int width, int height, Position startingPosition, LandingResult[][] landingResults) : this(width, height)
         {
-            var landingPlatform = new LandingPlatform(widthPlatform, heightPlatform);
-            landingPlatform.StartingPosition = startingPosition;
-
-            if (!IsValidPlatform(landingPlatform, area))
-            {
-                throw new ArgumentException();
-            }
-
-            var widthArea = area.GetAreaWidth();
-            var heightArea = area.GetAreaHeight();
-
-            landingPlatform.Platform = new LandingResult[widthArea][];
-            for (int i = 0; i < widthArea; i++)
-            {
-                landingPlatform.Platform[i] = new LandingResult[heightArea];
-                for (int j = 0; j < heightArea; j++)
-                    landingPlatform.Platform[i][j] = LandingResult.OUT_OF_PLATFORM;
-            }
-
-
-             for (int i = startingPosition.X; i < startingPosition.X + widthPlatform; i++)
-            {
-                for (int j = startingPosition.Y; j < startingPosition.Y + heightPlatform; j++)
-                {
-                    landingPlatform.Platform[i][j] = LandingResult.OK;
-                }
-            }
-
-            return landingPlatform;
+            StartingPosition = startingPosition;
+            LandingResults = landingResults;
         }
 
-        private static bool IsValidPlatform(LandingPlatform landingPlatform, LandingArea area)
+        public static LandingPlatform CreatePlatform(int widthPlatform, int heightPlatform, Position startingPosition, LandingArea landingArea)
         {
-            return landingPlatform.StartingPosition.X >= 0 &&
-                landingPlatform.StartingPosition.X + landingPlatform.Width <= area.GetAreaWidth() &&
-                landingPlatform.StartingPosition.Y >= 0 &&
-                landingPlatform.StartingPosition.Y + landingPlatform.Height <= area.GetAreaHeight();
+            return LandingPlatformBuilder.CreateLandingPlatform()
+                .WithWidthAndHeight(widthPlatform, heightPlatform)
+                .WithStartingPosition(startingPosition)
+                .IntoArea(landingArea)
+                .WithDefaultLandingResult()
+                .Build();
+        }
+
+        internal static bool IsValidPlatform(int width, int height, Position startingPosition, LandingArea landingArea)
+        {
+            return startingPosition.X >= 0 &&
+                startingPosition.X + width <= landingArea.GetAreaWidth() &&
+                startingPosition.Y >= 0 &&
+                startingPosition.Y + height <= landingArea.GetAreaHeight();
         }
 
         public void SetPreviousRocketAtPosition(int x, int y)
         {
-            Platform[x][y] = LandingResult.CLASH;
+            LandingResults[x][y] = LandingResult.CLASH;
 
-            Platform[x-1][y] = LandingResult.CLASH;
-            Platform[x + 1][y] = LandingResult.CLASH;
+            LandingResults[x-1][y] = LandingResult.CLASH;
+            LandingResults[x + 1][y] = LandingResult.CLASH;
 
-            Platform[x - 1][y -1] = LandingResult.CLASH;
-            Platform[x - 1][y] = LandingResult.CLASH;
-            Platform[x - 1][y + 1] = LandingResult.CLASH;
+            LandingResults[x - 1][y -1] = LandingResult.CLASH;
+            LandingResults[x - 1][y] = LandingResult.CLASH;
+            LandingResults[x - 1][y + 1] = LandingResult.CLASH;
 
-            Platform[x + 1][y - 1] = LandingResult.CLASH;
-            Platform[x + 1][y] = LandingResult.CLASH;
-            Platform[x + 1][y + 1] = LandingResult.CLASH;
+            LandingResults[x + 1][y - 1] = LandingResult.CLASH;
+            LandingResults[x + 1][y] = LandingResult.CLASH;
+            LandingResults[x + 1][y + 1] = LandingResult.CLASH;
 
         }
 
