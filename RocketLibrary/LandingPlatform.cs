@@ -27,11 +27,14 @@ namespace RocketLibrary
 
         public static LandingPlatform CreatePlatform(Position startingPosition, LandingArea landingArea, int? widthPlatform = 0, int? heightPlatform = 0)
         {
-            var width = int.TryParse(configuration["WidthPlatform"], out int widthP) ? widthP : widthPlatform.Value;
-            var height = int.TryParse(configuration["HeightPlatform"], out int heightP) ? heightP : heightPlatform.Value;
+            int.TryParse(configuration["WidthPlatform"], out int widthP);
+            var width = (widthPlatform > 0) ? widthPlatform : widthP;
+
+            int.TryParse(configuration["HeightPlatform"], out int heightP);
+            var height = heightPlatform > 0 ? heightPlatform : heightP;
 
             return LandingPlatformBuilder.CreateLandingPlatform()
-                .WithWidthAndHeight(width, height)
+                .WithWidthAndHeight(width.Value, height.Value)
                 .WithStartingPosition(startingPosition)
                 .IntoArea(landingArea)
                 .WithDefaultLandingResult()

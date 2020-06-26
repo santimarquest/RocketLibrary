@@ -42,8 +42,7 @@ namespace RocketLibraryTest
             var area = LandingArea.CreateArea(100, 100);
             var startingPosition = new Position(5, 5);
 
-            // Gettings dimensions from appsettings.json in \RocketLibraryTest\bin\Debug\netcoreapp3.1\appsettings.json
-            var platform = LandingPlatform.CreatePlatform(startingPosition, area);
+            var platform = LandingPlatform.CreatePlatform(startingPosition, area, 10, 10);
 
             var rocket = new Rocket();
             var position = new Position(x, y);
@@ -57,6 +56,25 @@ namespace RocketLibraryTest
             // Assert
 
             Assert.Equal(canland, result);
+        }
+
+       [Fact]
+        public void PlatformDimensionConfigurationTest()
+        {
+            // Arrange
+
+            var area = LandingArea.CreateArea(100, 100);
+            var startingPosition = new Position(5, 5);
+
+            // Act
+
+            // Getting platform dimensions from \RocketLibraryTest\bin\Debug\netcoreapp3.1\appsettings.json
+            var platform = LandingPlatform.CreatePlatform(startingPosition, area);
+
+            // Assert
+
+            Assert.Equal(3, platform.Width);
+            Assert.Equal(3, platform.Height);
         }
     }
 }
