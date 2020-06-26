@@ -1,16 +1,23 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Concurrent;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
+using System.Runtime.CompilerServices;
 
 namespace RocketLibrary
 {
-    public  class LandingPlatform
+    public sealed class LandingPlatform
     {
        private static IConfiguration configuration = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory()) // Directory where the json files are located
         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
         .Build();
+
+        private static readonly Lazy<LandingPlatform> singletonLandingPlatform =
+              new Lazy<LandingPlatform>(() => new LandingPlatform());
+
+        public static LandingPlatform Instance
+       => singletonLandingPlatform.Value;
 
         public int Width { get; set; }
         public int Height { get; set; }
@@ -19,12 +26,16 @@ namespace RocketLibrary
 
         public ConcurrentDictionary<(int, int), LandingResult> LandingResults { get; set; }
 
+        private LandingPlatform()
+        {
+
+        }
         public LandingPlatform(int width, int height, Position startingPosition, ConcurrentDictionary<(int, int), LandingResult> landingResults)
         {
-            Width = width;
-            Height = height;
-            StartingPosition = startingPosition;
-            LandingResults = landingResults;
+            Instance.Width = width;
+            Instance.Height = height;
+            Instance.StartingPosition = startingPosition;
+            Instance.LandingResults = landingResults;
         }
 
         public static LandingPlatform CreatePlatform(Position startingPosition, LandingArea landingArea, int? widthPlatform = 0, int? heightPlatform = 0)
@@ -41,6 +52,12 @@ namespace RocketLibrary
                 .IntoArea(landingArea)
                 .WithDefaultLandingResult()
                 .Build();
+        }
+
+        internal static LandingPlatform LandingPlatformInstance(int widthPlatform, int heightPlatform, Position startingPosition, ConcurrentDictionary<(int, int), LandingResult> landingResults)
+        {
+            new LandingPlatform(widthPlatform, heightPlatform, startingPosition, landingResults);
+            return Instance;
         }
 
         public static bool IsValidPlatform(int width, int height, Position startingPosition, LandingArea landingArea)

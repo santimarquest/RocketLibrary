@@ -45,15 +45,6 @@ namespace RocketLibrary
                 throw new ArgumentException();
             }
 
-            var widthArea = landingArea.GetAreaWidth();
-            var heightArea = landingArea.GetAreaHeight();
-
-            //LandingResults = new LandingResult[widthArea][];
-            //for (int i = 0; i < widthArea; i++)
-            //{
-            //    LandingResults[i] = new LandingResult[heightArea];
-            //}
-
             LandingResults = new ConcurrentDictionary<(int, int), LandingResult>();
 
             return this;
@@ -74,7 +65,7 @@ namespace RocketLibrary
 
         public LandingPlatform Build()
         {
-            return new LandingPlatform(WidthPlatform, HeightPlatform, StartingPosition, LandingResults);
+            return LandingPlatform.LandingPlatformInstance(WidthPlatform, HeightPlatform, StartingPosition, LandingResults);
         }
 
     }
