@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RocketLibrary
@@ -35,6 +37,9 @@ namespace RocketLibrary
             Y <= platform.StartingPosition.Y + platform.Height);
         }
 
-
+        public static bool IsvalidStartingPosition(Position position)
+        {
+            return (position.X >= 0 && position.Y>= 0);
+        }
     }
 }

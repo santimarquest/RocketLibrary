@@ -19,6 +19,10 @@ namespace RocketLibrary
 
         public LandingPlatformBuilder WithWidthAndHeight (int width, int height)
         {
+            if (width < 0  || height < 0) {
+                throw new ArgumentException();
+            }
+            
             WidthPlatform = width;
             HeightPlatform = height;
 
@@ -27,6 +31,10 @@ namespace RocketLibrary
 
         public LandingPlatformBuilder WithStartingPosition (Position startingPosition)
         {
+            if (!Position.IsvalidStartingPosition(startingPosition))
+            {
+                throw new ArgumentException();
+            }
             StartingPosition = startingPosition;
             return this;
         }

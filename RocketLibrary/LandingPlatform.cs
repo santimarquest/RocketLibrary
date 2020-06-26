@@ -13,14 +13,10 @@ namespace RocketLibrary
 
         public LandingResult[][] LandingResults;
 
-        public LandingPlatform(int width, int height)
+        public LandingPlatform(int width, int height, Position startingPosition, LandingResult[][] landingResults)
         {
             Width = width;
             Height = height;
-        }
-
-        public LandingPlatform(int width, int height, Position startingPosition, LandingResult[][] landingResults) : this(width, height)
-        {
             StartingPosition = startingPosition;
             LandingResults = landingResults;
         }
