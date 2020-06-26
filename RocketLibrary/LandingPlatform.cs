@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Concurrent;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RocketLibrary
 {
@@ -15,9 +17,9 @@ namespace RocketLibrary
 
         public Position StartingPosition { get; set; }
 
-        public LandingResult[][] LandingResults { get; set; }
+        public ConcurrentDictionary<(int, int), LandingResult> LandingResults { get; set; }
 
-        public LandingPlatform(int width, int height, Position startingPosition, LandingResult[][] landingResults)
+        public LandingPlatform(int width, int height, Position startingPosition, ConcurrentDictionary<(int, int), LandingResult> landingResults)
         {
             Width = width;
             Height = height;
@@ -63,9 +65,9 @@ namespace RocketLibrary
 
         private void SetLandingResultClashForPosition(Position position)
         {
-            if (position.IsPositionInPlatform(this) && LandingResults[position.X][position.Y] == LandingResult.OK)
+            if (position.IsPositionInPlatform(this) && LandingResults[(position.X, position.Y)] == LandingResult.OK)
             {
-                LandingResults[position.X][position.Y] = LandingResult.CLASH;
+                LandingResults[(position.X,position.Y)] = LandingResult.CLASH;
             }
         }
     }

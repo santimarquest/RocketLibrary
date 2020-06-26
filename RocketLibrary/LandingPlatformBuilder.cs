@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 
 namespace RocketLibrary
 {
@@ -9,7 +10,7 @@ namespace RocketLibrary
 
         public Position StartingPosition { get; set; }
 
-        public LandingResult[][] LandingResults;
+        public ConcurrentDictionary<(int, int), LandingResult> LandingResults;
         public static LandingPlatformBuilder CreateLandingPlatform()
         {
             return new LandingPlatformBuilder();
@@ -47,11 +48,13 @@ namespace RocketLibrary
             var widthArea = landingArea.GetAreaWidth();
             var heightArea = landingArea.GetAreaHeight();
 
-            LandingResults = new LandingResult[widthArea][];
-            for (int i = 0; i < widthArea; i++)
-            {
-                LandingResults[i] = new LandingResult[heightArea];
-            }
+            //LandingResults = new LandingResult[widthArea][];
+            //for (int i = 0; i < widthArea; i++)
+            //{
+            //    LandingResults[i] = new LandingResult[heightArea];
+            //}
+
+            LandingResults = new ConcurrentDictionary<(int, int), LandingResult>();
 
             return this;
         }
@@ -62,7 +65,7 @@ namespace RocketLibrary
             {
                 for (int j = StartingPosition.Y; j < StartingPosition.Y + HeightPlatform; j++)
                 {
-                    LandingResults[i][j] = LandingResult.OK;
+                    LandingResults[(i,j)] = LandingResult.OK;
                 }
             }
 

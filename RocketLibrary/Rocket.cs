@@ -16,7 +16,7 @@ namespace RocketLibrary
             {
                 return ResultValue[LandingResult.OUT_OF_PLATFORM];
             }           
-            return ResultValue[platform.LandingResults[position.X][position.Y]];         
+            return ResultValue[platform.LandingResults[(position.X,position.Y)]];         
         }
     }
 }
