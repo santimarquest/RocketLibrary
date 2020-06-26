@@ -1,30 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-
-namespace RocketLibrary
+﻿namespace RocketLibrary
 {
     public class Position
     {
         public int X;
         public int Y;
-        
 
-        public Position()
+        public Position(int x, int y)
         {
-            X = 0;
-            Y = 0;
-        }
-
-        public Position(int x, int y, LandingArea area)
-        {
-            if (x < 0 || x > area.GetAreaWidth() || y < 0 || y > area.GetAreaHeight()) 
-            {
-                throw new ArgumentException();
-            } 
-
             X = x;
             Y = y;
         }
@@ -39,7 +21,7 @@ namespace RocketLibrary
 
         public static bool IsvalidStartingPosition(Position position)
         {
-            return (position.X >= 0 && position.Y>= 0);
+            return (position.X >= 0 && position.Y >= 0);
         }
     }
 }

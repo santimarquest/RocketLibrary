@@ -1,5 +1,4 @@
 using RocketLibrary;
-using System;
 using Xunit;
 
 namespace RocketLibraryTest
@@ -15,11 +14,11 @@ namespace RocketLibraryTest
             // Arrange
 
             var area = LandingArea.CreateArea(100, 100);
-            var startingPosition = new Position(5, 5, area);
+            var startingPosition = new Position(5, 5);
             var platform = LandingPlatform.CreatePlatform(10, 10, startingPosition, area);
 
             var rocket = new Rocket();
-            var position = new Position(x, y, area);
+            var position = new Position(x, y);
 
             // Act
 
@@ -40,11 +39,11 @@ namespace RocketLibraryTest
             // Arrange
 
             var area = LandingArea.CreateArea(100, 100);
-            var startingPosition = new Position(5, 5, area);
+            var startingPosition = new Position(5, 5);
             var platform = LandingPlatform.CreatePlatform(10, 10, startingPosition, area);
 
             var rocket = new Rocket();
-            var position = new Position(x, y, area);
+            var position = new Position(x, y);
 
             platform.SetPreviousRocketAtPosition(7, 7);
 

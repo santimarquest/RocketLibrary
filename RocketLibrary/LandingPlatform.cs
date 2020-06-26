@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RocketLibrary
+﻿namespace RocketLibrary
 {
-   public  class LandingPlatform
+    public  class LandingPlatform
     {
-        public int Width;
-        public int Height;
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public Position StartingPosition { get; set; }
 
-        public LandingResult[][] LandingResults;
+        public LandingResult[][] LandingResults { get; set; }
 
         public LandingPlatform(int width, int height, Position startingPosition, LandingResult[][] landingResults)
         {
@@ -31,7 +27,7 @@ namespace RocketLibrary
                 .Build();
         }
 
-        internal static bool IsValidPlatform(int width, int height, Position startingPosition, LandingArea landingArea)
+        public static bool IsValidPlatform(int width, int height, Position startingPosition, LandingArea landingArea)
         {
             return startingPosition.X >= 0 &&
                 startingPosition.X + width <= landingArea.GetAreaWidth() &&
@@ -41,20 +37,22 @@ namespace RocketLibrary
 
         public void SetPreviousRocketAtPosition(int x, int y)
         {
-            LandingResults[x][y] = LandingResult.CLASH;
-
-            LandingResults[x-1][y] = LandingResult.CLASH;
-            LandingResults[x + 1][y] = LandingResult.CLASH;
-
-            LandingResults[x - 1][y -1] = LandingResult.CLASH;
-            LandingResults[x - 1][y] = LandingResult.CLASH;
-            LandingResults[x - 1][y + 1] = LandingResult.CLASH;
-
-            LandingResults[x + 1][y - 1] = LandingResult.CLASH;
-            LandingResults[x + 1][y] = LandingResult.CLASH;
-            LandingResults[x + 1][y + 1] = LandingResult.CLASH;
+            for (int i = x-1; i <= x + 1; i++ )
+            {
+                for (int j = y - 1; j <= y + 1; j++)
+                {
+                    SetLandingResultClashForPosition(new Position(i, j));
+                }
+            }
 
         }
 
+        private void SetLandingResultClashForPosition(Position position)
+        {
+            if (position.IsPositionInPlatform(this) && LandingResults[position.X][position.Y] == LandingResult.OK)
+            {
+                LandingResults[position.X][position.Y] = LandingResult.CLASH;
+            }
+        }
     }
 }

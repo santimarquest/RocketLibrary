@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace RocketLibrary
 {
@@ -18,6 +15,13 @@ namespace RocketLibrary
 
         public static LandingArea CreateArea(int x, int y)
         {
+            // Factory method with guard clause
+            
+            if (x < 0 || y < 0)
+            {
+                throw new ArgumentException();
+            }
+
             return new LandingArea(x, y);
         }
 
