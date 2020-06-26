@@ -14,9 +14,9 @@
         public bool IsPositionInPlatform(LandingPlatform platform)
         {
             return (X >= platform.StartingPosition.X &&
-            X <= platform.StartingPosition.X + platform.Width &&
+            X < platform.StartingPosition.X + platform.Width &&
             Y >= platform.StartingPosition.Y &&
-            Y <= platform.StartingPosition.Y + platform.Height);
+            Y < platform.StartingPosition.Y + platform.Height);
         }
 
         public static bool IsvalidStartingPosition(Position position)

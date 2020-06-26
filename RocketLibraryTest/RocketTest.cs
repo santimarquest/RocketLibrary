@@ -7,6 +7,10 @@ namespace RocketLibraryTest
     {
         [Theory]
         [InlineData(5, 5, "ok for landing")]
+        [InlineData(5, 14, "ok for landing")]
+        [InlineData(14, 14, "ok for landing")]
+        [InlineData(14, 5, "ok for landing")]
+        [InlineData(15, 15, "out of platform")]
         [InlineData(16,15, "out of platform")]
         
         public void CanLandTestWithoutLandedRocket(int x, int y, string result)
