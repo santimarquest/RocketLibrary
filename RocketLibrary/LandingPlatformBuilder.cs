@@ -51,12 +51,9 @@ namespace RocketLibrary
             for (int i = 0; i < widthArea; i++)
             {
                 LandingResults[i] = new LandingResult[heightArea];
-                for (int j = 0; j < heightArea; j++)
-                    LandingResults[i][j] = LandingResult.OUT_OF_PLATFORM;
             }
 
             return this;
-
         }
 
         public LandingPlatformBuilder WithDefaultLandingResult()

@@ -6,10 +6,10 @@ namespace RocketLibraryTest
     public class RocketTest
     {
         [Theory]
-        [InlineData(5, 5, LandingResult.OK)]
-        [InlineData(16,15, LandingResult.OUT_OF_PLATFORM)]
+        [InlineData(5, 5, "ok for landing")]
+        [InlineData(16,15, "out of platform")]
         
-        public void CanLandTestWithoutLandedRocket(int x, int y, LandingResult result)
+        public void CanLandTestWithoutLandedRocket(int x, int y, string result)
         {
             // Arrange
 
@@ -27,14 +27,15 @@ namespace RocketLibraryTest
             // Assert
 
             Assert.Equal(canland, result);
-
         }
 
         [Theory]
-        [InlineData(7, 7, LandingResult.CLASH)]
-        [InlineData(6, 6, LandingResult.CLASH)]
-        [InlineData(9, 9, LandingResult.OK)]
-        public void CanLandTestWithLandedRocket(int x, int y, LandingResult result)
+        [InlineData(7, 7, "clash")]
+        [InlineData(6, 6, "clash")]
+        [InlineData(7, 8, "clash")]
+        [InlineData(6, 7, "clash")]
+        [InlineData(9, 9, "ok for landing")]
+        public void CanLandTestWithLandedRocket(int x, int y, string result)
         {
             // Arrange
 
@@ -54,7 +55,6 @@ namespace RocketLibraryTest
             // Assert
 
             Assert.Equal(canland, result);
-
         }
     }
 }
