@@ -5,7 +5,7 @@ Principal considerations of this exercise
 - I've used a singleton for the landing platform (with the implementation of Lazy<T>), as it's a shared resource.
 - I've used a ConcurrentDictionary to model the landing results in the platform, as more than one rocket can land on the same platform at the same time.
 - I've used a simplified version of the builder design pattern to create a landing platform 
-- I've added some more unit tests than required, to test the configuration, exceptions, and rocket landings in the border of the platform.
+- I've added some more unit tests than required, to test the configuration, exceptions, and rocket landings in the border of the platform. I've used xUnit Framework for unit testing.
 - Regarding the configuration, I've added an appsettings.json file in \RocketLibraryTest\bin\Debug\netcoreapp3.1\appsettings.json, what I needed for unit testing. It would be necessary to add the same configuration file in \RocketLibrary\bin\Release\netcoreapp3.1\appsettings.json for the usage of this library in production 
   
  # Setup
