@@ -40,6 +40,11 @@ namespace RocketLibrary
 
         public LandingPlatformBuilder IntoArea (LandingArea landingArea)
         {
+            if (!IsStartingPositionInArea(landingArea))
+            {
+                throw new ArgumentException();
+            }
+
             if (!LandingPlatform.IsValidPlatform(WidthPlatform, HeightPlatform, StartingPosition, landingArea))
             {
                 throw new ArgumentException();
@@ -48,6 +53,12 @@ namespace RocketLibrary
             LandingResults = new ConcurrentDictionary<(int, int), LandingResult>();
 
             return this;
+        }
+
+        private bool IsStartingPositionInArea(LandingArea landingArea)
+        {
+            return (StartingPosition.X <= landingArea.GetAreaWidth() &&
+                       StartingPosition.Y <= landingArea.GetAreaHeight());
         }
 
         public LandingPlatformBuilder WithDefaultLandingResult()

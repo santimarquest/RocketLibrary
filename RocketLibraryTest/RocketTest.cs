@@ -1,4 +1,5 @@
 using RocketLibrary;
+using System;
 using Xunit;
 
 namespace RocketLibraryTest
@@ -79,6 +80,17 @@ namespace RocketLibraryTest
 
             Assert.Equal(3, platform.Width);
             Assert.Equal(3, platform.Height);
+        }
+
+        [Fact]
+        public void PlatformDimensionConfigurationExceptionTest()
+        {
+            // Arrange
+
+            var area = LandingArea.CreateArea(100, 100);
+            var startingPosition = new Position(5, 5);
+
+            Assert.Throws<ArgumentException>(() => LandingPlatform.CreatePlatform(startingPosition, area, 1000, 1000));
         }
     }
 }
