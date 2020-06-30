@@ -30,7 +30,7 @@ namespace RocketLibrary
 
         public LandingPlatformBuilder WithStartingPosition (Position startingPosition)
         {
-            if (!Position.IsvalidStartingPosition(startingPosition))
+            if (!startingPosition.IsvalidStartingPosition())
             {
                 throw new ArgumentException();
             }

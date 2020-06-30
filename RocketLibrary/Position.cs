@@ -19,9 +19,9 @@
             Y < platform.StartingPosition.Y + platform.Height);
         }
 
-        public static bool IsvalidStartingPosition(Position position)
+        public bool IsvalidStartingPosition()
         {
-            return (position.X >= 0 && position.Y >= 0);
+            return (X >= 0 && Y >= 0);
         }
     }
 }
