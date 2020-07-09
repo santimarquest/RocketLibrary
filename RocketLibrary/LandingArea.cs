@@ -4,8 +4,8 @@ namespace RocketLibrary
 {
     public class LandingArea
     {
-        private readonly int Width;
-        private readonly int Height;
+        public int Width { get; }
+        public int Height { get; }
 
         private LandingArea (int width, int height)
         {
@@ -23,16 +23,6 @@ namespace RocketLibrary
             }
 
             return new LandingArea(x, y);
-        }
-
-        public int GetAreaWidth ()
-        {
-            return Width;
-        }
-
-        public int GetAreaHeight()
-        {
-            return Height;
         }
     }
 }

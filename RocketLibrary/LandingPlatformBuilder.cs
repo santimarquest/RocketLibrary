@@ -3,14 +3,18 @@ using System.Collections.Concurrent;
 
 namespace RocketLibrary
 {
+    // Properties expose fields.Fields should(almost always) be kept private to a class and accessed via get and set properties.
+    // Properties provide a level of abstraction allowing you to change the fields while not affecting the external way they are accessed by the things that use your class.
     public class LandingPlatformBuilder
     {
-        public int WidthPlatform;
-        public int HeightPlatform;
+        // All these fields can be private
+        private int WidthPlatform;
+        private int HeightPlatform;
 
-        public Position StartingPosition { get; set; }
+        private Position StartingPosition;
 
-        public ConcurrentDictionary<(int, int), LandingResult> LandingResults;
+        private ConcurrentDictionary<Position, LandingResult> LandingResults { get; set; }
+
         public static LandingPlatformBuilder CreateLandingPlatform()
         {
             return new LandingPlatformBuilder();
@@ -50,28 +54,15 @@ namespace RocketLibrary
                 throw new ArgumentException();
             }
 
-            LandingResults = new ConcurrentDictionary<(int, int), LandingResult>();
+            LandingResults = new ConcurrentDictionary<Position, LandingResult>();
 
             return this;
         }
 
         private bool IsStartingPositionInArea(LandingArea landingArea)
         {
-            return (StartingPosition.X <= landingArea.GetAreaWidth() &&
-                       StartingPosition.Y <= landingArea.GetAreaHeight());
-        }
-
-        public LandingPlatformBuilder WithDefaultLandingResult()
-        {
-            for (int i = StartingPosition.X; i < StartingPosition.X + WidthPlatform; i++)
-            {
-                for (int j = StartingPosition.Y; j < StartingPosition.Y + HeightPlatform; j++)
-                {
-                    LandingResults[(i,j)] = LandingResult.OK;
-                }
-            }
-
-            return this;
+            return (StartingPosition.X <= landingArea.Width &&
+                       StartingPosition.Y <= landingArea.Height);
         }
 
         public LandingPlatform Build()

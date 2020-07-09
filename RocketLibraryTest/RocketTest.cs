@@ -22,12 +22,11 @@ namespace RocketLibraryTest
             var startingPosition = new Position(5, 5);
             var platform = LandingPlatform.CreatePlatform(startingPosition, area, 10, 10);
 
-            var rocket = new Rocket();
             var position = new Position(x, y);
 
             // Act
 
-            var canland = rocket.CanLand(platform, position);
+            var canland = platform.CanLand(platform, position);
 
             // Assert
 
@@ -49,14 +48,13 @@ namespace RocketLibraryTest
 
             var platform = LandingPlatform.CreatePlatform(startingPosition, area, 10, 10);
 
-            var rocket = new Rocket();
             var position = new Position(x, y);
 
             platform.SetPreviousRocketAtPosition(7, 7);
 
             // Act
 
-            var canland = rocket.CanLand(platform, position);
+            var canland = platform.CanLand(platform, position);
 
             // Assert
 
