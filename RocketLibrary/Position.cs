@@ -7,7 +7,6 @@
     // Properties provide a level of abstraction allowing you to change the fields while not affecting the external way they are accessed by the things that use your class.
     public struct Position
     {
-        // Must be a public property with a getter and a setter
         public int X { get;}
         public int Y { get; }
 
